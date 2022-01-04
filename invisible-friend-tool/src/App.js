@@ -1,6 +1,7 @@
 import PreguntarNombres from './PreguntarNombres';
 
 import React, { Component } from 'react';
+import FormularioIncompatibilidades from './FormularioIncompatibilidades';
 
 
 class App extends Component {
@@ -34,6 +35,8 @@ class App extends Component {
     return (
       <div className="App">
         <PreguntarNombres anyadir={this.anyadirParticipante.bind(this)} participantes={this.state.participantes} />
+
+        <FormularioIncompatibilidades participantes={this.state.participantes} />
       </div>
     );
 

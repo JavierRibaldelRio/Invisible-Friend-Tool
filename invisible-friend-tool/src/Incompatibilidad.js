@@ -6,35 +6,19 @@ class Incompatibilidad extends Component {
         super(props);
     }
 
-    restringir() {
-
-        this.props.restringir(this.props.numeroFila, this.props.numeroColumna);
-    }
-
-
     render() {
 
         //Almacena la variable de participante
-        const participante = this.props.participante
-
-        var deshabilitado = false;
-
-
-        //Si el número de fila es el mismo que el número de columna
-        if (this.props.numeroFila === this.props.numeroColumna) {
-
-            deshabilitado = true;
-        }
-
+        const regalador = this.props.regalador
 
         return (
             //Devuelve una casilla de verificación con las características introducidas
-            <label htmlFor={'label' + this.props.restringido + participante} key={'label' + this.props.restringido + participante}>
+            <label htmlFor={'label' + regalador} key={'label' + regalador}>
                 <input type='checkbox' name='tablaIncompatibilidades'
-                    checked={this.props.restringido}
-                    key={this.props.restringido + 'participante'}
-                    onClick={this.restringir.bind(this)}
-                    disabled={deshabilitado}
+                    checked={this.props.valor}                                      //Indica si esta o no esta marcada la check box
+                    key={this.props.restringido + regalador + 'participante'}       //Key crea una clave única para cada elemento
+                    onChange={this.props.restringirCompleta.bind(this)}             //En el cambio ejecuta la función de cabio  
+                    disabled={this.props.bloqueado}                                 //En caso de que se especifique bloquea la casilla
                 />
             </label>
         );

@@ -33,9 +33,23 @@ class App extends Component {
       copia.push([a]);
 
       //LLena todos los huecos en blanco en la posición de de false y se asegura de que los que sean true por obligación,sehan true
-      reiniciar(copia);
+      for (var i = 1; i < copia.length; i++) {
 
-      console.table(copia);
+        for (var j = 1; j < copia[0].length; j++) {
+
+          if (j === i || copia[i][j] === true) {
+
+            copia[i][j] = true;
+
+          }
+
+          else {
+
+            copia[i][j] = false;
+          }
+
+        }
+      }
       this.setState({ participantes: this.state.participantes.concat(a), tablaDeIncompatibilidad: [...copia] }); //Anyade al estado la nueva persona
 
     }
@@ -46,16 +60,44 @@ class App extends Component {
 
   }
 
+  //Se ocupa de reiniciar la tabla (ponerlo casi todo a false)
+
+  reiniciarTabla() {
+
+    var copia = [...this.state.tablaDeIncompatibilidad]
+
+    for (var i = 1; i < copia.length; i++) {
+
+      for (var j = 1; j < copia[0].length; j++) {
+
+        if (j === i) {
+
+          copia[i][j] = true;
+
+        }
+
+        else {
+
+          copia[i][j] = false;
+        }
+
+      }
+    }
+
+    this.setState({ tablaDeIncompatibilidad: copia });    //Guarda los camibios añadiondeolos al estado
+
+  }
+
   //Se ocupa de cambiar las casillas correspondientes a su nuevo valor
   restringir(fila, columna) {
 
-    let copia = [...this.state.tablaDeIncompatibilidad];
+    let copia = [...this.state.tablaDeIncompatibilidad];  //Hace una copia del array
 
-    copia[fila][columna] = !copia[fila][columna]
+    copia[fila][columna] = !copia[fila][columna];       //Invierte la casilla
 
-    copia[columna][fila] = !copia[columna][fila]
+    copia[columna][fila] = !copia[columna][fila];     //Invierte la casilla que es la misma que la anterior
 
-    this.setState({ tablaDeIncompatibilidad: copia })
+    this.setState({ tablaDeIncompatibilidad: copia });    //Guarda los camibios añadiondeolos al estado
 
   }
 
@@ -65,7 +107,17 @@ class App extends Component {
       <div className="App">
         <PreguntarNombres anyadir={this.anyadirParticipante.bind(this)} participantes={this.state.participantes} />
 
-        <TablaIncompatibilidades tabla={this.state.tablaDeIncompatibilidad} participantes={this.state.participantes} restringir={this.restringir.bind(this)} />
+        <TablaIncompatibilidades
+
+          tabla={this.state.tablaDeIncompatibilidad}  //La tabla de compativilidad
+
+          participantes={this.state.participantes}    //Todos los participantes, para crear las cabeceras
+
+          restringir={this.restringir.bind(this)}     //La función que hay para restringir alguna pareja
+          reiniciar={this.reiniciarTabla.bind(this)}  //Manda la funciónd e reinicair la tabla
+
+
+        />
       </div>
     );
 

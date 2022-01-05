@@ -1,7 +1,8 @@
 import PreguntarNombres from './PreguntarNombres';
 
 import React, { Component } from 'react';
-import FormularioIncompatibilidades from './FormularioIncompatibilidades';
+import TablaIncompatibilidades from './TablaIncompatibilidades';
+import reiniciar from './ReiniciarTabla';
 
 
 class App extends Component {
@@ -25,34 +26,14 @@ class App extends Component {
 
       var copia = [...this.state.tablaDeIncompatibilidad];
 
-
+      //Le anñade la a al matriz cero
       copia[0].push(a);
 
+      //Le añade una nueva fila al array
       copia.push([a]);
 
-      // copia.map((x) => {
-      //   x.push(false)
-      // })
-
-      copia[copia.length - 1][copia.length - 1] = true;
-
-      for (var i = 1; i < copia.length; i++) {
-
-        for (var j = 1; j < copia[0].length; j++) {
-
-          if (j === i) {
-
-            copia[i][j] = true;
-
-          }
-
-          else {
-
-            copia[i][j] = false;
-          }
-
-        }
-      }
+      //LLena todos los huecos en blanco en la posición de de false y se asegura de que los que sean true por obligación,sehan true
+      reiniciar(copia);
 
       console.table(copia);
       this.setState({ participantes: this.state.participantes.concat(a), tablaDeIncompatibilidad: [...copia] }); //Anyade al estado la nueva persona
@@ -65,13 +46,26 @@ class App extends Component {
 
   }
 
+  //Se ocupa de cambiar las casillas correspondientes a su nuevo valor
+  restringir(fila, columna) {
+
+    let copia = [...this.state.tablaDeIncompatibilidad];
+
+    copia[fila][columna] = !copia[fila][columna]
+
+    copia[columna][fila] = !copia[columna][fila]
+
+    this.setState({ tablaDeIncompatibilidad: copia })
+
+  }
+
   render() {
 
     return (
       <div className="App">
         <PreguntarNombres anyadir={this.anyadirParticipante.bind(this)} participantes={this.state.participantes} />
 
-        <FormularioIncompatibilidades participantes={this.state.participantes} />
+        <TablaIncompatibilidades tabla={this.state.tablaDeIncompatibilidad} participantes={this.state.participantes} restringir={this.restringir.bind(this)} />
       </div>
     );
 

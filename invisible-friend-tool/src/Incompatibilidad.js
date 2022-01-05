@@ -6,40 +6,37 @@ class Incompatibilidad extends Component {
         super(props);
     }
 
+    restringir() {
+
+        this.props.restringir(this.props.numeroFila, this.props.numeroColumna);
+    }
+
 
     render() {
 
         //Almacena la variable de participante
         const participante = this.props.participante
 
+        var deshabilitado = false;
+
+
+        //Si el número de fila es el mismo que el número de columna
+        if (this.props.numeroFila === this.props.numeroColumna) {
+
+            deshabilitado = true;
+        }
 
 
         return (
-
-            //Crea un djiv con una ide predeterminada
-            <div id={'incompativilidad' + participante}>
-
-                <h3>{participante}</h3>
-                {
-                    //Se ejecuta por cada casillla
-                    this.props.participantes.map((x) => {
-
-                        //Devuelve una casilla de verificación por nombre
-                        return <label htmlFor={'label' + x + participante} key={'label' + x + participante}>
-                            <input type='checkbox' name={participante + 'checkbox'}
-                                value={x} key={x + 'participante'} />{x}
-
-                            <br />
-
-                        </label>
-                    })
-                }
-
-                <br></br>
-                <hr />
-
-            </div>
-
+            //Devuelve una casilla de verificación con las características introducidas
+            <label htmlFor={'label' + this.props.restringido + participante} key={'label' + this.props.restringido + participante}>
+                <input type='checkbox' name='tablaIncompatibilidades'
+                    checked={this.props.restringido}
+                    key={this.props.restringido + 'participante'}
+                    onClick={this.restringir.bind(this)}
+                    disabled={deshabilitado}
+                />
+            </label>
         );
     }
 }

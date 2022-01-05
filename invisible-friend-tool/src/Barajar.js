@@ -4,9 +4,7 @@
 
 //Algoritmo de fiher-yates
 
-function shuffle(arr) {
-
-    var array = arr;
+function shuffle(array) {
 
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));

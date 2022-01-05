@@ -25,7 +25,7 @@ class FilaTabla extends Component {
                         regalador={fila[0]}                                             //Indica la persona que regala                          
                         valor={fila[i]}                                                 //Indica el valor que tiene la celda               
                         key={'incompativilidad' + fila[0] + i}                          //Crea una clave para el dom random
-                        bloqueado={(this.props.numeroFila === i)}                       //Devuelve si esta bloqueada esa verificación
+                        bloqueado={(this.props.numeroFila === i || this.props.bloqueadoGeneral)}                       //Devuelve si esta bloqueada esa verificación
                         //Crea una función que manda a función restringir l a columna y la fila
                         restringirCompleta={(() => { this.props.restringir(this.props.numeroFila, i) }).bind(this)}
 

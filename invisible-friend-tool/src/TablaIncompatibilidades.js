@@ -6,12 +6,8 @@ import Incompatibilidad from './Incompatibilidad';
 class TablaIncompatibilidades extends Component {
     constructor(props) {
         super(props);
-    }
-
-    generarAmigoInvisible() {
 
     }
-
 
     render() {
 
@@ -26,8 +22,9 @@ class TablaIncompatibilidades extends Component {
                 key={this.props.tabla[i][0] + 'fila'}           //Necesario para react
                 fila={this.props.tabla[i]}                      //El contenido de la fila, [(nombre), true,false...]
                 numeroFila={i}                                  //almacena el número de la fila en la matriz global
-                restringir={this.props.restringir.bind(this)}   //Le pasa la función 
-            ></FilaTabla>)
+                restringir={this.props.restringir.bind(this)}   //Le pasa la función
+                bloqueadoGeneral={this.props.bloqueadoGeneral}  //Le manda si esta bloqueado todo
+            />);
 
         }
 
@@ -61,8 +58,9 @@ class TablaIncompatibilidades extends Component {
                     </tbody>
                 </table>
 
-                <button onClick={this.props.reiniciar.bind(this)}>Reiniciar</button>
+                <button onClick={this.props.reiniciar.bind(this)} disabled={this.props.bloqueadoGeneral}>Reiniciar</button>
 
+                <button onClick={this.props.amigoInvisible.bind(this)}>Generar Amigo invisible</button>
 
 
             </div>

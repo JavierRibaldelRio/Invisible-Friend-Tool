@@ -43,12 +43,12 @@ class PreguntarNombres extends Component {
                     <label htmlFor="persona" id="persona-label">
                         Inserte el nombre de cada participante y después presione "Añadir participante":<br>
                         </br>
-                        <input type="text" id="persona" placeholder="Pedro" ref={this.nombreInput} required />
+                        <input type="text" id="persona" placeholder="Pedro" ref={this.nombreInput} disabled={this.props.bloqueadoGeneral} required />
                     </label>
 
                     <br />
 
-                    <input type='submit' value='Añadir Participante'></input>
+                    <input type='submit' value='Añadir Participante' disabled={this.props.bloqueadoGeneral}></input>
 
                 </form>
 

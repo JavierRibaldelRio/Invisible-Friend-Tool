@@ -12,6 +12,7 @@ class App extends Component {
     this.state = {
 
       participantes: [],  //alamcena todos los participantes en el amigo invisible
+      tablaDeIncompatibilidad: [['x']] //Es la tabla de la incompatibilidad
     }
   }
 
@@ -20,7 +21,41 @@ class App extends Component {
 
     if (this.state.participantes.includes(a) === false) {
 
-      this.setState({ participantes: this.state.participantes.concat(a) }); //Anyade al estado la nueva persona
+      //Copia de tabla de compatibilidad
+
+      var copia = [...this.state.tablaDeIncompatibilidad];
+
+
+      copia[0].push(a);
+
+      copia.push([a]);
+
+      // copia.map((x) => {
+      //   x.push(false)
+      // })
+
+      copia[copia.length - 1][copia.length - 1] = true;
+
+      for (var i = 1; i < copia.length; i++) {
+
+        for (var j = 1; j < copia[0].length; j++) {
+
+          if (j === i) {
+
+            copia[i][j] = true;
+
+          }
+
+          else {
+
+            copia[i][j] = false;
+          }
+
+        }
+      }
+
+      console.table(copia);
+      this.setState({ participantes: this.state.participantes.concat(a), tablaDeIncompatibilidad: [...copia] }); //Anyade al estado la nueva persona
 
     }
     else {

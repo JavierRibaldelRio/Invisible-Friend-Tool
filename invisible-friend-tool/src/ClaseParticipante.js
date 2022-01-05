@@ -19,6 +19,12 @@ class Participante {
             return false;
         }
     }
+
+    //Elimina la persona a regalar
+    borrar() {
+
+        this.personaARegalar = undefined;
+    }
 }
 
 export default Participante;

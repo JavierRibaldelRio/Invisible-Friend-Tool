@@ -2,8 +2,8 @@ import PreguntarNombres from './PreguntarNombres';
 
 import React, { Component } from 'react';
 import TablaIncompatibilidades from './TablaIncompatibilidades';
-import reiniciar from './ReiniciarTabla';
-
+import Participante from './ClaseParticipante';
+import shuffle from './Barajar';
 
 class App extends Component {
 
@@ -12,8 +12,9 @@ class App extends Component {
     super(props);
     this.state = {
 
-      participantes: [],  //alamcena todos los participantes en el amigo invisible
-      tablaDeIncompatibilidad: [['x']] //Es la tabla de la incompatibilidad
+      participantes: [],                //alamcena todos los participantes en el amigo invisible
+      tablaDeIncompatibilidad: [['x']], //Es la tabla de la incompatibilidad
+      bloqueadoGeneral: false,          //Indica si todavia se permiten añadir amigos
     }
   }
 
@@ -101,21 +102,100 @@ class App extends Component {
 
   }
 
+
+  //Hace el amigo invisible
+
+  amigoInvisible() {
+
+    this.setState({ bloqueadoGeneral: true });    //Evita que se puedan seguir añadiendo persona o cambiado restriciones
+
+    const tabla = [...this.state.tablaDeIncompatibilidad];    //Almacena la tabla 
+
+    var arrObjetos = [];    //Crea una array que almacena todos los objetos
+
+    //LLena el array de incompatibilidades de cada objeto
+    for (var i = 1; i < tabla.length; i++) {
+
+      var arrayRestringidos = [];
+
+      for (var j = 1; j < tabla[0].length; j++) {
+
+        if (tabla[i][j] === true) {
+
+          arrayRestringidos.push(tabla[0][j]);
+
+        }
+      }
+      arrObjetos.push(new Participante(tabla[i][0], arrayRestringidos))
+
+    }
+
+    var contador = 0;       //Contador que almacena en número de iteraciones que ha tenido el bucle
+
+    var repetir = true;     //Comprueba si el bucle se tiene que repetir
+
+    //Para que se repita 100 veces
+    while (contador < 1000 && repetir === true) {
+      repetir = false;  //Dice que ya no hay que repetir
+      var copiaABarajar = [...this.state.participantes];  //Crea una copia que va a brajar
+
+      shuffle(copiaABarajar);   //BAraja
+
+      //Se ejecuta una vez por cada objeto
+      arrObjetos.map((x) => {
+
+
+        //Elimina todo lo que haya sido guardadro
+        x.borrar();
+
+        //Si no se puede añadir haz que el bucle se vuelva a repetir
+        if (x.setPersonaARegalar(copiaABarajar.shift()) === false) {
+
+          repetir = true; //Se repite
+
+        }
+
+        //Le suma uno al contador
+        contador++;
+      });
+
+    }
+
+    //Si no ha salido nininguan combinación posible
+    if (repetir === true) {
+
+      //Avisa de que no hay combinaciones posibles
+      alert('No existe una combinación posible que cumpla todas las restricciones.');
+
+      //Activa sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssskssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssñkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk                                                                                                                                                                                                                                                  
+      this.setState({ bloqueadoGeneral: false });
+    }
+    else {
+
+    }
+    console.log(arrObjetos);
+
+  }
+
   render() {
 
     return (
       <div className="App">
-        <PreguntarNombres anyadir={this.anyadirParticipante.bind(this)} participantes={this.state.participantes} />
+        <PreguntarNombres
+          anyadir={this.anyadirParticipante.bind(this)}          //Funciónque añade un nuevo participante al amigo invisible
+          participantes={this.state.participantes}               //Array que conteine a todos los participantes
+          bloqueadoGeneral={this.state.bloqueadoGeneral}         //Si se pueden añadir o no personas
+        />
 
         <TablaIncompatibilidades
 
-          tabla={this.state.tablaDeIncompatibilidad}  //La tabla de compativilidad
+          tabla={this.state.tablaDeIncompatibilidad}            //La tabla de compativilidad
+          bloqueadoGeneral={this.state.bloqueadoGeneral}        //Indiaca si todavia se pueden o no su puede añadir compañeros
+          participantes={this.state.participantes}              //Todos los participantes, para crear las cabeceras
 
-          participantes={this.state.participantes}    //Todos los participantes, para crear las cabeceras
-
-          restringir={this.restringir.bind(this)}     //La función que hay para restringir alguna pareja
-          reiniciar={this.reiniciarTabla.bind(this)}  //Manda la funciónd e reinicair la tabla
-
+          restringir={this.restringir.bind(this)}               //La función que hay para restringir alguna pareja
+          reiniciar={this.reiniciarTabla.bind(this)}            //Manda la funciónd e reinicair la tabla
+          amigoInvisible={this.amigoInvisible.bind(this)}       //Le manda la función que hace el amigo invisible
 
         />
       </div>

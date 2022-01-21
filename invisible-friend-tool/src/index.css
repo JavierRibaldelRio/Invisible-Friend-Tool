@@ -3,3 +3,19 @@
     border: black 0.5vmin solid;
 
 }
+
+/* Esta clase se añade desde la condicional de la Fila de la Tabla del amigo invisible */
+
+.nombreOculto {
+
+    visibility: hidden;
+
+    background-color: black;
+}
+
+/* Esta clase se añade desde la condicional de la Fila de la Tabla del amigo invisible */
+
+.nombreMostrado {
+
+    visibility: visible;
+}

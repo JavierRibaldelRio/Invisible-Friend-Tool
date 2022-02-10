@@ -13,8 +13,6 @@ class TablaIncompatibilidades extends Component {
 
     generarAmigoInvisbleYPasarEnviar() {
 
-        console.log(this.refEnviar.current.checked)
-
         this.props.amigoInvisible(this.refEnviar.current.checked);
 
     }

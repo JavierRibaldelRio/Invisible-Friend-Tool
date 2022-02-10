@@ -5,6 +5,7 @@ import TablaIncompatibilidades from './TablaIncompatibilidades';
 import Participante from './ClaseParticipante';
 import shuffle from './Barajar';
 import TablaAmigoInvisible from './TablaAmigoInvisble';
+import FormularioEmail from './FormularioEmail';
 
 class App extends Component {
 
@@ -190,6 +191,26 @@ class App extends Component {
 
   }
 
+  //Esta función envia al servidor los datos, el servidor envia los correos
+
+  enviarAlServidor(texto) {
+
+    var arrayCorreosTextos = [];    //Almacena todos los textos y los correos
+
+    //Por cada participanre
+    this.state.objetosParticipantes.map((o) => {
+
+      //Añado al array que va ir al servidor
+      arrayCorreosTextos.push({
+        email: o.correo,
+        texto: texto.replace('**DESTINATARIO**', o.nombre).replace('**REGALADO**', o.personaARegalar)
+      });
+
+    });
+
+
+  }
+
   render() {
 
     return (
@@ -213,6 +234,8 @@ class App extends Component {
         />
 
         <TablaAmigoInvisible participantes={this.state.objetosParticipantes} enviar={this.state.enviarPorCorreo} definirCorreo={this.cambiarCorreo.bind(this)}></TablaAmigoInvisible>
+
+        <FormularioEmail enviarAlServidor={this.enviarAlServidor.bind(this)}></FormularioEmail>
       </div>
     );
 

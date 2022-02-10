@@ -16,7 +16,8 @@ class App extends Component {
       participantes: [],                //alamcena todos los participantes en el amigo invisible
       tablaDeIncompatibilidad: [['x']],      //Es la tabla de la incompatibilidad
       bloqueadoGeneral: false,               //Indica si todavia se permiten añadir amigos
-      objetosParticipantes: []                //Almacena los objetos de los participantes
+      objetosParticipantes: [],                //Almacena los objetos de los participantes
+      enviarPorCorreo: false              //Indica si se va a envia r por correo los resultados
     }
   }
 
@@ -107,9 +108,9 @@ class App extends Component {
 
   //Hace el amigo invisible
 
-  amigoInvisible() {
+  amigoInvisible(enviar) {
 
-    this.setState({ bloqueadoGeneral: true });    //Evita que se puedan seguir añadiendo persona o cambiado restriciones
+    this.setState({ bloqueadoGeneral: true, enviarPorCorreo: enviar });    //Evita que se puedan seguir añadiendo persona o cambiado restriciones
 
     const tabla = [...this.state.tablaDeIncompatibilidad];    //Almacena la tabla 
 
@@ -178,6 +179,17 @@ class App extends Component {
 
   }
 
+  cambiarCorreo(per, cor) {
+
+    let copiaObjetos = this.state.objetosParticipantes; //Crea una copia
+
+    copiaObjetos.find(a => a.nombre === per).correo = cor;
+
+    this.setState({ objetosParticipantes: copiaObjetos });
+
+
+  }
+
   render() {
 
     return (
@@ -200,7 +212,7 @@ class App extends Component {
 
         />
 
-        <TablaAmigoInvisible participantes={this.state.objetosParticipantes}></TablaAmigoInvisible>
+        <TablaAmigoInvisible participantes={this.state.objetosParticipantes} enviar={this.state.enviarPorCorreo} definirCorreo={this.cambiarCorreo.bind(this)}></TablaAmigoInvisible>
       </div>
     );
 

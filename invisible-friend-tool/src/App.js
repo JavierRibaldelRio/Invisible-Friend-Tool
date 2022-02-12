@@ -21,7 +21,37 @@ class App extends Component {
       enviarPorCorreo: false              //Indica si se va a envia r por correo los resultados
     }
   }
+  componentDidMount() {
+    //API
+    //Crea una nueva petición al servidor
 
+    var data = [12, 432, 23423]
+
+    fetch('http://localhost:3001/api'
+      , {
+
+        method: 'POST',
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json',
+
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" head
+
+      }
+    ).then(data => {
+      console.log(data); // JSON data parsed by `data.json()` call
+    });
+
+
+    console.log('se ha ejecutado');
+
+  }
   //Añade al arrayy de participantes el nuevo participante
   anyadirParticipante(a) {
 
@@ -236,7 +266,9 @@ class App extends Component {
         <TablaAmigoInvisible participantes={this.state.objetosParticipantes} enviar={this.state.enviarPorCorreo} definirCorreo={this.cambiarCorreo.bind(this)}></TablaAmigoInvisible>
 
         <FormularioEmail enviarAlServidor={this.enviarAlServidor.bind(this)}></FormularioEmail>
+
       </div>
+
     );
 
   }

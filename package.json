@@ -1,0 +1,24 @@
+{
+  "name": "invisible-friend-tool",
+  "version": "1.0.0",
+  "description": "A program that makes invisible friends, with restrictions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JavierRibaldelRio/Invisible-Friend-Tool.git"
+  },
+  "author": "Javier Ribal del Rio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JavierRibaldelRio/Invisible-Friend-Tool/issues"
+  },
+  "homepage": "https://github.com/JavierRibaldelRio/Invisible-Friend-Tool#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2"
+  }
+}

@@ -31,22 +31,24 @@ class App extends Component {
       , {
 
         method: 'POST',
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-          'Content-Type': 'application/json',
-
-          // 'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json'
         },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data), // body data type must match "Content-Type" head
-
+        body: JSON.stringify({
+          user: {
+            name: "John",
+            email: "john@example.com"
+          }
+        })
       }
-    ).then(data => {
-      console.log(data); // JSON data parsed by `data.json()` call
-    });
+    ).then(response => console.log(response.json()));
+
+    // var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    // var theUrl = "/api";
+    // xmlhttp.open("POST", theUrl);
+    // xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    // xmlhttp.setRequestHeader('Access-Control-Allow-Origin', '*')
+    // xmlhttp.send(JSON.stringify({ "email": "hello@user.com", "response": { "name": "Tester" } }));
 
 
     console.log('se ha ejecutado');

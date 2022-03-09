@@ -23,25 +23,73 @@ class App extends Component {
   }
   componentDidMount() {
     //API
-    //Crea una nueva petición al servidor
 
-    var data = [12, 432, 23423]
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: 'React POST Request Example' })
+    };
+    fetch('http://localhost:3001/api', requestOptions)
+      .then(response => console.log('Success:', response))
+      .then(data => console.log(data));
 
-    fetch('http://localhost:3001/api'
-      , {
+    // const dataToSend = JSON.stringify({ "usernam": "hey@mail.com", "password": "101010" });
+    // let dataReceived = "";
+    // fetch("http://localhost:3001/api", {
+    //   credentials: "same-origin",
+    //   mode: "same-origin",
+    //   method: "post",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: dataToSend
+    // })
+    //   .then(resp => {
+    //     if (resp.status === 200) {
+    //       return resp.json()
+    //     } else {
+    //       console.log("Status: " + resp.status)
+    //       return Promise.reject("server")
+    //     }
+    //   })
+    //   .then(dataJson => {
+    //     dataReceived = JSON.parse(dataJson)
+    //   })
+    //   .catch(err => {
+    //     if (err === "server") return
+    //     console.log(err)
+    //   })
 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user: {
-            name: "John",
-            email: "john@example.com"
-          }
-        })
-      }
-    ).then(response => console.log(response.json()));
+    // console.log(`Received: ${dataReceived}`)
+
+    // var formData = new FormData();
+
+    // formData.append("username", "Groucho");
+    // formData.append("accountnum", 123456);
+
+
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("GET", "http://localhost:3001/api");
+    // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+    // xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+
+
+    // xhr.send(formData);
+
+    // //Crea una nueva petición al servidor
+
+    // var data = [12, 432, 23423]
+
+    // var url = 'http://localhost:3001/api';
+    // var data = { username: 'example' };
+
+    // fetch(url, {
+    //   method: 'POST', // or 'PUT'
+    //   body: JSON.stringify(data), // data can be `string` or {object}!
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // }).then(res => res.json())
+    //   .catch(error => console.error('Error:', error))
+    //   .then(response => console.log('Success:', response));;
 
     // var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
     // var theUrl = "/api";

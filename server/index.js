@@ -1,6 +1,6 @@
 //Script del servidor
 //Javier Ribal del Río javierribal@gmail.com
-
+require('dotenv').config()              //Activa el .env
 const express = require('express');     //Importa express  
 
 // const bodyParser = require('body-parser');

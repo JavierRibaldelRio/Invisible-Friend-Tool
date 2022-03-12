@@ -6,6 +6,7 @@ import Participante from './ClaseParticipante';
 import shuffle from './Barajar';
 import TablaAmigoInvisible from './TablaAmigoInvisble';
 import FormularioEmail from './FormularioEmail';
+import postearCorreos from './EnviarAServidor';
 
 class App extends Component {
 
@@ -20,87 +21,6 @@ class App extends Component {
       objetosParticipantes: [],                //Almacena los objetos de los participantes
       enviarPorCorreo: false              //Indica si se va a envia r por correo los resultados
     }
-  }
-  componentDidMount() {
-    //API
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: 'React POST Request Example' })
-    };
-    fetch('http://localhost:3001/api', requestOptions)
-      .then(response => console.log('Success:', response))
-      .then(data => console.log(data));
-
-    // const dataToSend = JSON.stringify({ "usernam": "hey@mail.com", "password": "101010" });
-    // let dataReceived = "";
-    // fetch("http://localhost:3001/api", {
-    //   credentials: "same-origin",
-    //   mode: "same-origin",
-    //   method: "post",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: dataToSend
-    // })
-    //   .then(resp => {
-    //     if (resp.status === 200) {
-    //       return resp.json()
-    //     } else {
-    //       console.log("Status: " + resp.status)
-    //       return Promise.reject("server")
-    //     }
-    //   })
-    //   .then(dataJson => {
-    //     dataReceived = JSON.parse(dataJson)
-    //   })
-    //   .catch(err => {
-    //     if (err === "server") return
-    //     console.log(err)
-    //   })
-
-    // console.log(`Received: ${dataReceived}`)
-
-    // var formData = new FormData();
-
-    // formData.append("username", "Groucho");
-    // formData.append("accountnum", 123456);
-
-
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("GET", "http://localhost:3001/api");
-    // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    // xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-
-
-    // xhr.send(formData);
-
-    // //Crea una nueva petición al servidor
-
-    // var data = [12, 432, 23423]
-
-    // var url = 'http://localhost:3001/api';
-    // var data = { username: 'example' };
-
-    // fetch(url, {
-    //   method: 'POST', // or 'PUT'
-    //   body: JSON.stringify(data), // data can be `string` or {object}!
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // }).then(res => res.json())
-    //   .catch(error => console.error('Error:', error))
-    //   .then(response => console.log('Success:', response));;
-
-    // var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-    // var theUrl = "/api";
-    // xmlhttp.open("POST", theUrl);
-    // xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    // xmlhttp.setRequestHeader('Access-Control-Allow-Origin', '*')
-    // xmlhttp.send(JSON.stringify({ "email": "hello@user.com", "response": { "name": "Tester" } }));
-
-
-    console.log('se ha ejecutado');
-
   }
   //Añade al arrayy de participantes el nuevo participante
   anyadirParticipante(a) {
@@ -273,7 +193,7 @@ class App extends Component {
 
   //Esta función envia al servidor los datos, el servidor envia los correos
 
-  enviarAlServidor(texto) {
+  enviarAlServidor(texto, asunto) {
 
     var arrayCorreosTextos = [];    //Almacena todos los textos y los correos
 
@@ -282,13 +202,15 @@ class App extends Component {
 
       //Añado al array que va ir al servidor
       arrayCorreosTextos.push({
-        email: o.correo,
-        texto: texto.replace('**DESTINATARIO**', o.nombre).replace('**REGALADO**', o.personaARegalar)
+        to: o.correo,
+        subject: asunto,
+        text: texto.replace('**DESTINATARIO**', o.nombre).replace('**REGALADO**', o.personaARegalar)
       });
 
     });
 
-
+    //API
+    postearCorreos(arrayCorreosTextos);
   }
 
   render() {
@@ -302,7 +224,6 @@ class App extends Component {
         />
 
         <TablaIncompatibilidades
-
           tabla={this.state.tablaDeIncompatibilidad}            //La tabla de compativilidad
           bloqueadoGeneral={this.state.bloqueadoGeneral}        //Indiaca si todavia se pueden o no su puede añadir compañeros
           participantes={this.state.participantes}              //Todos los participantes, para crear las cabeceras
@@ -310,7 +231,6 @@ class App extends Component {
           restringir={this.restringir.bind(this)}               //La función que hay para restringir alguna pareja
           reiniciar={this.reiniciarTabla.bind(this)}            //Manda la funciónd e reinicair la tabla
           amigoInvisible={this.amigoInvisible.bind(this)}       //Le manda la función que hace el amigo invisible
-
         />
 
         <TablaAmigoInvisible participantes={this.state.objetosParticipantes} enviar={this.state.enviarPorCorreo} definirCorreo={this.cambiarCorreo.bind(this)}></TablaAmigoInvisible>

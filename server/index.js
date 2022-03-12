@@ -3,6 +3,8 @@
 require('dotenv').config()              //Activa el .env
 const express = require('express');     //Importa express  
 
+var nodemailer = require('nodemailer'); //Importa Nodemailer
+
 // const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 3001;  //Coge el puerto del entorno o usa el 3001 
@@ -19,6 +21,16 @@ app.use(express.json());
 
 //Crea una nueva ruta
 
+//Activa el servidor de correo
+
+var gestor = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.E_MAIL_USER,
+        pass: process.env.E_MAIL_PASSWORD
+    }
+});
+
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -27,14 +39,17 @@ app.use(function (req, res, next) {
     next();
 });
 
+//Se pone .post porqué utiliza el metodo
 app.post('/api', (req, res) => {
 
-    // console.log(request.method);
-    console.log('Hola otra vez : ' + req.body.username + 'ahora son las ' + Date());
+    console.log(req.body);  //Muestra por la consola el texto
 
-    // res.statusCode = 200;
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Headers', '*')
+    var mailOptions = {
+        from: 'tucorreo@gmail.com',
+        to: 'mi-amigo@yahoo.com',
+        subject: 'Asunto Del Correo',
+        text: mensaje
+    };
 
     res.status(200).type('html').json({ message: ' Esto aquffí dfdsf' })
 

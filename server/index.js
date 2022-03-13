@@ -44,12 +44,26 @@ app.post('/api', (req, res) => {
 
     console.log(req.body);  //Muestra por la consola el texto
 
+    const mensaje = 'Hola, soy yo'
+
     var mailOptions = {
         from: 'tucorreo@gmail.com',
         to: 'mi-amigo@yahoo.com',
         subject: 'Asunto Del Correo',
         text: mensaje
     };
+
+    gestor.sendMail(mailOptions, (err, inf) => {
+
+        if (err) {
+
+            console.error('Se ha producido un error: ' + err);
+        }
+        else {
+
+            console.info('Email enviado: ' + inf);
+        }
+    });
 
     res.status(200).type('html').json({ message: ' Esto aquffí dfdsf' })
 

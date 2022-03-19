@@ -22,9 +22,8 @@ class TablaAmigoInvisible extends Component {
                 {
                     //Crea todas las filas de participantes 
 
-
                     this.props.participantes.map((a) => {
-                        return <FilaTablaAmigoInvisible participante={a} key={a.nombre + 'filatablaincompativilidades'} />
+                        return <FilaTablaAmigoInvisible participante={a} definirCorreo={this.props.definirCorreo.bind(this)} key={a.nombre + 'filatablaincompativilidades'} enviar={this.props.enviar} />
                     })
 
 

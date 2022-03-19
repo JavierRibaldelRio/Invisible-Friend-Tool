@@ -1,12 +1,12 @@
-import PreguntarNombres from './PreguntarNombres';
+import PreguntarNombres from './components/PreguntarNombres';
 
 import React, { Component } from 'react';
-import TablaIncompatibilidades from './TablaIncompatibilidades';
-import Participante from './ClaseParticipante';
-import shuffle from './Barajar';
-import TablaAmigoInvisible from './TablaAmigoInvisble';
-import FormularioEmail from './FormularioEmail';
-import postearCorreos from './EnviarAServidor';
+import TablaIncompatibilidades from './components/TablaIncompatibilidades';
+import Participante from './class/ClaseParticipante';
+import shuffle from './scripts/Barajar';
+import TablaAmigoInvisible from './components/TablaAmigoInvisble';
+import FormularioEmail from './components/FormularioEmail';
+import postearCorreos from './scripts/EnviarAServidor';
 
 class App extends Component {
 

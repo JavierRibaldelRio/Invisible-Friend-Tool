@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { primeraMayuscula } from './FuncionesUtiles';
+import { primeraMayuscula } from '../scripts/FuncionesUtiles';
 import ListaParticipantes from './ListaParticipantes';
 
 

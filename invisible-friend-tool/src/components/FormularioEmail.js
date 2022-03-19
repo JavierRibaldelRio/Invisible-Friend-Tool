@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { asunto } from './Variables';
+import { asunto } from '../scripts/Variables';
 
 //Devuelve un formulario para enviar el correo con todos los participantes
 class FormularioEmail extends Component {

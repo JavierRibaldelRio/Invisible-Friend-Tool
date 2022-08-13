@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";   //Importa las librerias para react router
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import PreguntarNombres from './components/PreguntarNombres';
+import TablaIncompatibilidades from './components/TablaIncompatibilidades';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+
+    <Routes>
+      <Route path='/add-participant' element={<PreguntarNombres />} />
+      <Route path='/incompatibility-table' element={<TablaIncompatibilidades />} />
+    </Routes>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

@@ -4,8 +4,6 @@
  * 
  */
 
-import { primeraMayuscula } from "./FuncionesUtiles";
-
 function formatName(name) {
 
     name = name.trim();      //Elimina los espacios del nombre por delante o por detras

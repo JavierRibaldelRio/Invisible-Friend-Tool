@@ -4,6 +4,7 @@ class Participante {
     constructor(nombre, restriciones = []) {
 
         this.nombre = nombre;               //Nombre del participanre
+        this.correo = undefined;            //Almacena el correo
         this.restriciones = restriciones;   //A quien no puede regalar
         this.personaARegalar = undefined;   //A quien va ha regalar
     }

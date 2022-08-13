@@ -1,10 +1,12 @@
-import PreguntarNombres from './PreguntarNombres';
+import PreguntarNombres from './components/PreguntarNombres';
 
 import React, { Component } from 'react';
-import TablaIncompatibilidades from './TablaIncompatibilidades';
-import Participante from './ClaseParticipante';
-import shuffle from './Barajar';
-import TablaAmigoInvisible from './TablaAmigoInvisble';
+import TablaIncompatibilidades from './components/TablaIncompatibilidades';
+import Participante from './class/ClaseParticipante';
+import shuffle from './scripts/Barajar';
+import TablaAmigoInvisible from './components/TablaAmigoInvisble';
+import FormularioEmail from './components/FormularioEmail';
+import postearCorreos from './scripts/EnviarAServidor';
 
 class App extends Component {
 
@@ -16,10 +18,10 @@ class App extends Component {
       participantes: [],                //alamcena todos los participantes en el amigo invisible
       tablaDeIncompatibilidad: [['x']],      //Es la tabla de la incompatibilidad
       bloqueadoGeneral: false,               //Indica si todavia se permiten añadir amigos
-      objetosParticipantes: []                //Almacena los objetos de los participantes
+      objetosParticipantes: [],                //Almacena los objetos de los participantes
+      enviarPorCorreo: false              //Indica si se va a envia r por correo los resultados
     }
   }
-
   //Añade al arrayy de participantes el nuevo participante
   anyadirParticipante(a) {
 
@@ -107,9 +109,9 @@ class App extends Component {
 
   //Hace el amigo invisible
 
-  amigoInvisible() {
+  amigoInvisible(enviar) {
 
-    this.setState({ bloqueadoGeneral: true });    //Evita que se puedan seguir añadiendo persona o cambiado restriciones
+    this.setState({ bloqueadoGeneral: true, enviarPorCorreo: enviar });    //Evita que se puedan seguir añadiendo persona o cambiado restriciones
 
     const tabla = [...this.state.tablaDeIncompatibilidad];    //Almacena la tabla 
 
@@ -178,6 +180,39 @@ class App extends Component {
 
   }
 
+  cambiarCorreo(per, cor) {
+
+    let copiaObjetos = this.state.objetosParticipantes; //Crea una copia
+
+    copiaObjetos.find(a => a.nombre === per).correo = cor;
+
+    this.setState({ objetosParticipantes: copiaObjetos });
+
+
+  }
+
+  //Esta función envia al servidor los datos, el servidor envia los correos
+
+  enviarAlServidor(texto, asunto) {
+
+    var arrayCorreosTextos = [];    //Almacena todos los textos y los correos
+
+    //Por cada participanre
+    this.state.objetosParticipantes.map((o) => {
+
+      //Añado al array que va ir al servidor
+      arrayCorreosTextos.push({
+        to: o.correo,
+        subject: asunto,
+        text: texto.replace('**DESTINATARIO**', o.nombre).replace('**REGALADO**', o.personaARegalar)
+      });
+
+    });
+
+    //API
+    postearCorreos(arrayCorreosTextos);
+  }
+
   render() {
 
     return (
@@ -189,7 +224,6 @@ class App extends Component {
         />
 
         <TablaIncompatibilidades
-
           tabla={this.state.tablaDeIncompatibilidad}            //La tabla de compativilidad
           bloqueadoGeneral={this.state.bloqueadoGeneral}        //Indiaca si todavia se pueden o no su puede añadir compañeros
           participantes={this.state.participantes}              //Todos los participantes, para crear las cabeceras
@@ -197,11 +231,14 @@ class App extends Component {
           restringir={this.restringir.bind(this)}               //La función que hay para restringir alguna pareja
           reiniciar={this.reiniciarTabla.bind(this)}            //Manda la funciónd e reinicair la tabla
           amigoInvisible={this.amigoInvisible.bind(this)}       //Le manda la función que hace el amigo invisible
-
         />
 
-        <TablaAmigoInvisible participantes={this.state.objetosParticipantes}></TablaAmigoInvisible>
+        <TablaAmigoInvisible participantes={this.state.objetosParticipantes} enviar={this.state.enviarPorCorreo} definirCorreo={this.cambiarCorreo.bind(this)}></TablaAmigoInvisible>
+
+        <FormularioEmail enviarAlServidor={this.enviarAlServidor.bind(this)}></FormularioEmail>
+
       </div>
+
     );
 
   }

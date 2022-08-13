@@ -7,6 +7,14 @@ class TablaIncompatibilidades extends Component {
     constructor(props) {
         super(props);
 
+        this.refEnviar = new React.createRef();        //Referencia del boton
+    }
+
+
+    generarAmigoInvisbleYPasarEnviar() {
+
+        this.props.amigoInvisible(this.refEnviar.current.checked);
+
     }
 
     render() {
@@ -58,9 +66,17 @@ class TablaIncompatibilidades extends Component {
                     </tbody>
                 </table>
 
+                <div>
+
+                    Desea enviar por correo el resultado del reparto: <br />
+
+                    <input id='siDeseoEnviarlo' type='radio' name="enviar" ref={this.refEnviar} value={true} disabled={this.props.bloqueadoGeneral} />Sí
+                    <input id='siDeseoEnviarlo' type='radio' name="enviar" value={false} disabled={this.props.bloqueadoGeneral} />No
+                </div>
+
                 <button onClick={this.props.reiniciar.bind(this)} disabled={this.props.bloqueadoGeneral}>Reiniciar</button>
 
-                <button onClick={this.props.amigoInvisible.bind(this)}>Generar Amigo invisible</button>
+                <button onClick={this.generarAmigoInvisbleYPasarEnviar.bind(this)}>Generar Amigo invisible</button>
 
 
             </div>

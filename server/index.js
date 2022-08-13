@@ -15,21 +15,20 @@ const app = express();  //Inizailizamos el servidor
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
-// app.use(bodyParser.urlencoded({ extended: true }));
+
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 
-//Crea una nueva ruta
+//Para Sendinblue
 
-//Activa el servidor de correo
+const transporter = nodemailer.createTransport({
+    service: 'SendinBlue', // no need to set host or port etc.
+    auth: {
+        user: process.env.E_MAIL_USER,
+        pass: process.env.E_MAIL_PASSWORD
+    }
+});
 
-// var gestor = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//         user: process.env.E_MAIL_USER,
-//         pass: process.env.E_MAIL_PASSWORD
-//     }
-// });
 
 //Se utiliza para añadir todas las cabeceras
 app.use(function (req, res, next) {
@@ -43,32 +42,29 @@ app.use(function (req, res, next) {
 //Se pone .post porqué utiliza el metodo
 app.post('/api', (req, res) => {
 
-    console.log(req.body);  //Muestra por la consola el texto
 
-    // const mensaje = 'Hola, soy yo'
+    console.log('Se encuentra en /api')
 
-    // var mailOptions = {
-    //     from: 'tucorreo@gmail.com',
-    //     to: 'mi-amigo@yahoo.com',
-    //     subject: 'Asunto Del Correo',
-    //     text: mensaje
-    // };
+    console.log(req.body);
 
-    // gestor.sendMail(mailOptions, (err, inf) => {
+    //Reqbody almacena toda la información de correos
 
-    //     if (err) {
+    req.body.map((x) => {
 
-    //         console.error('Se ha producido un error: ' + err);
-    //     }
-    //     else {
+        transporter.sendMail({
+            to: x.to,
+            from: process.env.E_MAIL_FROM,
+            subject: x.subject,
+            html: x.text
+        })
+            .then((res) => console.log("Successfully sent"))
+            .catch((err) => console.log("Failed ", err))
 
-    //         console.info('Email enviado: ' + inf);
-    //     }
-    // });
+    });
 
     res.status(200).type('html').json({ message: ' Esto aquffí dfdsf' })
 
-})
+});
 
 //Utiliza  
 app.use("/", express.static(path.resolve(__dirname, '../invisible-friend-tool/build')));
@@ -76,7 +72,6 @@ app.use("/", express.static(path.resolve(__dirname, '../invisible-friend-tool/bu
 
 //Genera el puerto del servidor
 app.listen(PORT, () => {
-
     console.log('Hola desde ' + PORT);
 
 });

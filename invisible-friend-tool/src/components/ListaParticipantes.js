@@ -12,12 +12,9 @@ class ListaParticipantes extends Component {
         return (<ul id='listaParticipantes'>
 
             {
-                this.props.participantes.map((x) => {
-
-
-                    return (<LiParticipante key={x} participante={x} />);
-
-                })
+                this.props.participantes.map((x) =>
+                    <LiParticipante key={x} participante={x} />
+                )
             }
 
         </ul>);

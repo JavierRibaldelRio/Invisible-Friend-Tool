@@ -12,7 +12,7 @@ function Incompatibilidad(props) {
                 name='tablaIncompatibilidades'
                 checked={props.valor}                                      //Indica si esta o no esta marcada la check box
                 onChange={handleChange}                                    //En el cambio ejecuta la función de cabio  
-                disabled={this.props.bloqueado}                             //En caso de que se especifique bloquea la casilla
+                disabled={props.bloqueado}                             //En caso de que se especifique bloquea la casilla
             />
         </label>
     );

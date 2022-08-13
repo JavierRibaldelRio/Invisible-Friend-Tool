@@ -1,7 +1,10 @@
 
 //Se ocupa de poner todas las casillas en false mnos las impresindibles
 
-function reiniciar(arr) {
+
+
+
+function rellenarTabla(arr) {
 
     for (var i = 1; i < arr.length; i++) {
 
@@ -21,5 +24,4 @@ function reiniciar(arr) {
         }
     }
 }
-
-export default reiniciar
+export default rellenarTabla;

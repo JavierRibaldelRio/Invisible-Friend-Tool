@@ -11,7 +11,7 @@ function FilaTabla(props) {
     for (let i = 1; i < fila.length; i++) {
 
 
-        var restringir = (() => { this.props.restringir(this.props.numeroFila, i) }).binsd(this); //Pepara la función de restringir   
+        var restringir = (() => { props.restringir(props.numeroFila, i) }).bind(this); //Pepara la función de restringir   
 
         celdasNormales.push(
             <td key={'td' + fila[0] + i}/*Crea una clave con la i para celdas*/>
@@ -19,7 +19,7 @@ function FilaTabla(props) {
                 <Incompatibilidad
                     regalador={fila[0]}                                  //Indica la persona que regala                          
                     valor={fila[i]}                                      //Indica el valor que tiene la celda               
-                    bloqueado={(this.props.numeroFila === i)}            //Devuelve si esta bloqueada esa verificación
+                    bloqueado={(props.numeroFila === i)}            //Devuelve si esta bloqueada esa verificación
                     //Crea una función que manda a función restringir l a columna y la fila
                     restringirCompleta={restringir} />
 

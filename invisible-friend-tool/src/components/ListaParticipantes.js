@@ -1,24 +1,20 @@
-import React, { Component } from 'react';
+//Crea la lista de participantes
+
 import LiParticipante from './LiParticipante';
 
-class ListaParticipantes extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
+function ListaParticipantes(props) {
 
+    var eliminar = props.eliminar.bind(this);
 
+    return (<ul id='listaParticipantes'>
 
-        return (<ul id='listaParticipantes'>
-
-            {
-                this.props.participantes.map((x) =>
-                    <LiParticipante key={x} participante={x} />
-                )
-            }
-
-        </ul>);
-    }
+        {
+            props.participantes.map((x) =>
+                <LiParticipante key={x} participante={x} eliminar={eliminar} />
+            )
+        }
+    </ul>);
 }
+
 
 export default ListaParticipantes;

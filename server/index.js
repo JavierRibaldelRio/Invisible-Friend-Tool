@@ -2,7 +2,7 @@
 //Javier Ribal del Río javierribal@gmail.com
 require('dotenv').config()              //Activa el .env
 const express = require('express');     //Importa express  
-
+const path = require('path');           //Importa Path
 var nodemailer = require('nodemailer'); //Importa Nodemailer
 
 // const bodyParser = require('body-parser');
@@ -65,6 +65,10 @@ app.post('/api', (req, res) => {
     res.status(200).type('html').json({ message: ' Esto aquffí dfdsf' })
 
 });
+
+//Utiliza  
+app.use("/", express.static(path.resolve(__dirname, '../invisible-friend-tool/build')));
+
 
 //Genera el puerto del servidor
 app.listen(PORT, () => {

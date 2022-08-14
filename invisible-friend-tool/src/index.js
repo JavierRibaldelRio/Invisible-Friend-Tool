@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import PreguntarNombres from './components/PreguntarNombres';
 import TablaIncompatibilidades from './components/TablaIncompatibilidades';
 import TablaAmigoInvisible from './components/TablaAmigoInvisble';
+import FormularioEmail from './components/FormularioEmail';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Route path='/add-participant' element={<PreguntarNombres />} />
       <Route path='/incompatibility-table' element={<TablaIncompatibilidades />} />
       <Route path='/see-results' element={<TablaAmigoInvisible />} />
+      <Route path='/send-email' element={<FormularioEmail />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

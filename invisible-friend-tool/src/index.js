@@ -5,13 +5,14 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import PreguntarNombres from './components/PreguntarNombres';
 import TablaIncompatibilidades from './components/TablaIncompatibilidades';
+import TablaAmigoInvisible from './components/TablaAmigoInvisble';
 
 ReactDOM.render(
   <BrowserRouter>
-
     <Routes>
       <Route path='/add-participant' element={<PreguntarNombres />} />
       <Route path='/incompatibility-table' element={<TablaIncompatibilidades />} />
+      <Route path='/see-results' element={<TablaAmigoInvisible />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

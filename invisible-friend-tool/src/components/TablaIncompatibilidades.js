@@ -5,6 +5,7 @@ import rellenarTabla from '../scripts/RellenarTabla';
 import Participante from '../class/ClaseParticipante';
 import shuffle from '../scripts/Barajar';
 import repeticiones from '../data/repeticiones';
+import BotonContinuar from './BotonContinuar';
 
 
 //Crea la tabla par air marcando las incompativilidades
@@ -114,7 +115,7 @@ class TablaIncompatibilidades extends Component {
 
 
                 //Elimina todo lo que haya sido guardado en restriciones
-                participantes[i].borrar();
+                participantes[i].eliminarRestricciones();
 
                 //Si no se puede añadir haz que el bucle se vuelva a repetir
                 if (!participantes[i].setPersonaARegalar(nombresParticipantes.shift())) {
@@ -152,7 +153,7 @@ class TablaIncompatibilidades extends Component {
             //Coge Navigate
             const { navigate } = this.props;
 
-            navigate('/sent-results', stateNavigate);
+            navigate('/see-results', stateNavigate);
 
 
 
@@ -212,7 +213,7 @@ class TablaIncompatibilidades extends Component {
 
                 <button onClick={this.reiniciar}>Reiniciar tabla</button>
 
-                <button onClick={this.generaAmigoInvisible}>Generar Amigo invisible</button>
+                <BotonContinuar texto='Generar Amigo Invisible' handleClick={this.generaAmigoInvisible} />
 
             </div>
 

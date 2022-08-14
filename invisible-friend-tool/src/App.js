@@ -113,26 +113,6 @@ class App extends Component {
 
     this.setState({ bloqueadoGeneral: true, enviarPorCorreo: enviar });    //Evita que se puedan seguir añadiendo persona o cambiado restriciones
 
-    const tabla = [...this.state.tablaDeIncompatibilidad];    //Almacena la tabla 
-
-    var arrObjetos = [];    //Crea una array que almacena todos los objetos
-
-    //LLena el array de incompatibilidades de cada objeto
-    for (var i = 1; i < tabla.length; i++) {
-
-      var arrayRestringidos = [];
-
-      for (var j = 1; j < tabla[0].length; j++) {
-
-        if (tabla[i][j] === true) {
-
-          arrayRestringidos.push(tabla[0][j]);
-
-        }
-      }
-      arrObjetos.push(new Participante(tabla[i][0], arrayRestringidos))
-
-    }
 
     var contador = 0;       //Contador que almacena en número de iteraciones que ha tenido el bucle
 

@@ -24,7 +24,7 @@ class Participante {
     }
 
     //Elimina la persona a regalar
-    borrar() {
+    eliminarRestricciones() {
 
         this.personaARegalar = undefined;
     }

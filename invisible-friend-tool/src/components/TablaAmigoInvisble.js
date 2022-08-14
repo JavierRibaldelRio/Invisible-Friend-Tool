@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FilaTablaAmigoInvisible from './FilaTablaAmigoInvisible';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import BotonContinuar from './BotonContinuar';
 
 //Devuelve la tabla donde se muestran los amigos invisibles
 class TablaAmigoInvisible extends Component {
@@ -10,10 +11,12 @@ class TablaAmigoInvisible extends Component {
         this.state = { participantes: [] };
 
         this.definirCorreo = this.definirCorreo.bind(this);
+
+        this.continuar = this.continuar.bind(this);
     }
 
 
-
+    s
     //Cuando se monta el componente
     componentDidMount() {
 
@@ -30,40 +33,55 @@ class TablaAmigoInvisible extends Component {
         this.setState({ participantes: copiaParticipantes });
 
     }
+
+    //Pasa a la siguiente página
+    continuar() {
+
+        //Coge Navigate
+        const { navigate } = this.props;
+
+        const stateNavigate = { state: this.state.participantes };
+
+        navigate('/send-email', stateNavigate);
+
+    }
+
     render() {
 
+        var botonContinuar = (this.props.location.state.correo) ? <BotonContinuar texto="Continuar Enviando Correo" handleClick={this.continuar} /> : null;
 
-        return (<table id='tabla_amigo_invisible'>
+        return (<>
+            <table id='tabla_amigo_invisible'>
 
-            <tbody>
-                <tr>
+                <tbody>
+                    <tr>
+                        <th>Participante</th>
+                        <th>a de reglar a</th>
+                        <th>mostrar</th>
+                    </tr>
 
-                    <th>Participante</th>
-                    <th>a de reglar a</th>
-                    <th>mostrar</th>
-                </tr>
+                    {
+                        //Crea todas las filas de participantes 
+                        this.state.participantes.map((a) => {
+                            return <FilaTablaAmigoInvisible participante={a} definirCorreo={this.definirCorreo} key={a.nombre + 'filatablaincompativilidades'} enviar={this.props.location.state.correo} />
+                        })
 
-                {
-                    //Crea todas las filas de participantes 
+                    }
+                </tbody>
 
-                    this.state.participantes.map((a) => {
-                        return <FilaTablaAmigoInvisible participante={a} definirCorreo={this.definirCorreo} key={a.nombre + 'filatablaincompativilidades'} enviar={this.props.location.state.correo} />
-                    })
-
-                }
-            </tbody>
-
-        </table>);
+            </table>
+            {botonContinuar}
+        </>);
     }
 }
 
 export default (props) => {
 
-    const location = useLocation();
+    const location = useLocation(), navigate = useNavigate();
 
     return (<>
 
-        <TablaAmigoInvisible {...props} location={location} />
+        <TablaAmigoInvisible {...props} location={location} navigate={navigate} />
 
     </>)
 

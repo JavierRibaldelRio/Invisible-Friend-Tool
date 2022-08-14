@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
+import { useLocation } from 'react-router-dom';
+
 import { asunto } from '../scripts/Variables';
+
+import postearCorreos from '../scripts/EnviarAServidor';
 
 //Devuelve un formulario para enviar el correo con todos los participantes
 class FormularioEmail extends Component {
@@ -10,6 +14,29 @@ class FormularioEmail extends Component {
             texto: 'Hola,**DESTINATARIO**:\n\nPara el amigo de invisble de: <nombre del amigo invisible>, tienes que hacerle un regalo a **REGALADO**.\n\nGracias, para más dudas mandelas a este correo: <sucorreo@correo.su>\n\n',
             asunto: ''
         }
+
+        this.enviarAlServidor = this.enviarAlServidor.bind(this);
+    }
+
+
+    //Envia al servidor los mensajes y los correos
+    enviarAlServidor() {
+        var arrayCorreosTextos = [];    //Almacena todos los textos y los correos
+
+        //Por cada participanre
+        this.props.location.state.map((o) => {
+
+            //Añado al array que va ir al servidor
+            arrayCorreosTextos.push({
+                to: o.correo,
+                subject: this.state.asunto,
+                text: this.state.texto.replace('**DESTINATARIO**', o.nombre).replace('**REGALADO**', o.personaARegalar)
+            });
+
+        });
+
+        //API
+        postearCorreos(arrayCorreosTextos);
     }
 
     render() {
@@ -45,10 +72,15 @@ class FormularioEmail extends Component {
 
 
 
-            <input type='submit' value="Enviar" onClick={() => { this.props.enviarAlServidor(this.state.texto, this.state.asunto) }} />
+            <input type='submit' value="Enviar" onClick={this.enviarAlServidor} />
 
         </div >);
     }
 }
 
-export default FormularioEmail;
+export default (props) => {
+
+    const location = useLocation();
+
+    return <FormularioEmail {...props} location={location} />;
+};

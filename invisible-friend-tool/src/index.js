@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from "react-router-dom";   //Importa las librerias para react router
-import './index.css';
+import './sass/style';    //Importa todo el estilo
 import reportWebVitals from './reportWebVitals';
 import PreguntarNombres from './components/PreguntarNombres';
 import TablaIncompatibilidades from './components/TablaIncompatibilidades';

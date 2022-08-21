@@ -6,19 +6,20 @@
 
 #PreguntarNombres {
 
+    //Tamaño del grid
     height: 90vh;
 
     width: 100%;
 
 
-
+    //Grid
     display: grid;
 
     grid-template-areas: "Anyadir Participantes""Botones Participantes""Anuncios Participantes";
 
     grid-template-columns: 1.5fr 2fr;
 
-    grid-template-rows: 1fr 1fr 3fr;
+    grid-template-rows: 1fr 1fr 8fr;
 
     gap: 2vmax 6vmax;
 
@@ -29,14 +30,6 @@
 
 
 
-    //Elimina el margen incial con el que viene la app
-
-    h2 {
-
-        margin: 0;
-    }
-
-
 
     form {
 
@@ -44,9 +37,23 @@
         padding: 2vmax 0 0 1vmax;
         place-self: end;
 
+        #persona {
+
+            margin-top: 3vh;
+
+            width: 17vmax;
+
+            margin-right: 4vmin
+        }
+
     }
 
     #botones-control {
+
+        .Boton-Continuar {
+
+            justify-self: start;
+        }
 
         display: flex;
 
@@ -64,12 +71,15 @@
 
     }
 
-    .Boton-Continuar {
-
-        justify-self: start;
-    }
 
     #participantes {
+
+        //Elimina el margen incial con el que viene la app
+
+        h2 {
+
+            margin: 0;
+        }
 
         grid-area: Participantes;
 
@@ -78,57 +88,67 @@
 
         align-self: center;
 
+        ul {
+
+            @include columns(2);
+
+            column-fill: auto;
+
+            height: 80vh;
+
+            line-height: 5vmin;
+
+            li {
+
+                cursor: pointer;
+
+                margin: 0 3vmax;
+            }
+
+            li:hover {
+
+                color: red;
+
+                font-size: $font_size + 0.5vmin;
+
+                text-decoration: line-through;
+                text-decoration-thickness: 0.5vmin;
+            }
+
+        }
+
     }
 
 
-    #persona {
 
-        margin-top: 3vh;
-
-        width: 17vmax;
-
-        margin-right: 4vmin
-    }
-
-    ul {
-
-        @include columns(2);
-
-        column-fill: auto;
-
-        height: 80vh;
-
-
-        line-height: 5vmin;
-    }
-
-    li {
-
-        cursor: pointer;
-
-        margin: 0 3vmax;
-    }
-
-    li:hover {
-
-        color: red;
-
-        font-size: $font_size + 0.5vmin;
-
-        text-decoration: line-through;
-        text-decoration-thickness: 0.5vmin;
-    }
 
     @media (max-width:801px) {
 
-        height: min-content;
+
+        grid-template-areas: "Anyadir Anuncios ""Participantes Anuncios ""Botones Anuncios";
+
+        grid-template-columns: 4fr 2fr;
+
+        grid-template-rows: 1fr 10fr 1fr;
+
+        align-items: start;
 
 
+
+
+        form,
+        #participantes,
+        #botones-control {
+
+            align-self: start;
+
+            padding-left: 2vmax;
+
+        }
 
 
 
         #participantes {
-
 
             height: auto;
 
@@ -136,12 +156,16 @@
 
                 @include columns(1);
 
-                line-height: 4vmin;
+                height: auto;
+
+                line-height: 3vmin;
             }
+
+
 
         }
 
-        #botones-control {}
+
 
     }
 

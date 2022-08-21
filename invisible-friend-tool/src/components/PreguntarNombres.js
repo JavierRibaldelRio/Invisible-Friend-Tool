@@ -19,6 +19,8 @@ class PreguntarNombres extends Component {
 
         this.eliminar = this.eliminar.bind(this);
 
+        this.eliminarTodos = this.eliminarTodos.bind(this);
+
         this.pasarATabla = this.pasarATabla.bind(this);
 
         //Referencias 
@@ -28,29 +30,44 @@ class PreguntarNombres extends Component {
     //Asigna un nuevo nombre
     validar(e) {
 
-        //Evita que el formulario se refresque
         e.preventDefault();
 
-        //Almacena el participante, tal y como ha sido introducido en la casilla de verificación
-        let participante = this.nombreInput.current.value;
 
-        //Formatea el nombre
-        participante = formatName(participante);
+        if (this.state.participantes.length <= 29) {
+            //Evita que el formulario se refresque
 
-        //Resetea el formulario
-        document.getElementById(idForm).reset();
+            //Almacena el participante, tal y como ha sido introducido en la casilla de verificación
+            let participante = this.nombreInput.current.value;
 
-        //Añade al array de participantes
+            //Formatea el nombre
+            participante = formatName(participante);
 
-        //Si ya esta incluido impide añadirlo
-        if (!this.state.participantes.includes(participante)) {
-            this.setState({ participantes: [...this.state.participantes, participante] });
+            //Resetea el formulario
+            document.getElementById(idForm).reset();
+
+            //Añade al array de participantes
+
+            //Si ya esta incluido impide añadirlo
+            if (!this.state.participantes.includes(participante)) {
+                this.setState({ participantes: [...this.state.participantes, participante] });
+            }
+            else {
+
+                alert("Este participante ya existe.")
+            }
+
         }
         else {
 
-            alert("Este participante ya existe.")
+            alert("Se ha alcanzado el número máximo de participantes")
         }
+    }
 
+    //Elimina todos los participantes
+
+    eliminarTodos() {
+
+        this.setState({ participantes: [] })
     }
 
     //Elimina el participante
@@ -82,7 +99,8 @@ class PreguntarNombres extends Component {
     render() {
         return (
 
-            <div className='PreguntarNombres' >
+            <div id='PreguntarNombres' >
+
 
                 <form id={idForm} onSubmit={this.validar}>
 
@@ -92,17 +110,29 @@ class PreguntarNombres extends Component {
                         <input type="text" id="persona" placeholder="Pedro" ref={this.nombreInput} required />
                     </label>
 
-                    <br />
 
-                    <input type='submit' value='Añadir Participante'></input>
+                    <input type='submit' id="add" value='Añadir Participante'></input>
+
+
 
                 </form>
 
-                <h2>Participantes Añadidos</h2>
 
-                <ListaParticipantes participantes={this.state.participantes} eliminar={this.eliminar} />
+                <div id="botones-control">
+                    <button onClick={this.eliminarTodos} title={'Elimina a todos los participantes añadidos'}>Eliminar a todos</button>
+                    <BotonContinuar texto="Continuar" handleClick={this.pasarATabla} />
 
-                <BotonContinuar texto="Siguiente" handleClick={this.pasarATabla} />
+                </div>
+
+
+                <div id='participantes'>
+
+                    <h2>Participantes Añadidos</h2>
+
+                    <ListaParticipantes participantes={this.state.participantes} eliminar={this.eliminar} />
+                </div>
+
+                <div style={{ backgroundColor: 'blue', gridArea: 'Anuncios', placeSelf: 'stretch' }}></div>
 
 
 

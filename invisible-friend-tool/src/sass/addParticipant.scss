@@ -1,0 +1,148 @@
+//Solo para /add-participants
+
+@import './main.scss';
+@import './mixins.scss';
+
+
+#PreguntarNombres {
+
+    height: 90vh;
+
+    width: 100%;
+
+
+
+    display: grid;
+
+    grid-template-areas: "Anyadir Participantes""Botones Participantes""Anuncios Participantes";
+
+    grid-template-columns: 1.5fr 2fr;
+
+    grid-template-rows: 1fr 1fr 3fr;
+
+    gap: 2vmax 6vmax;
+
+    justify-items: end;
+
+    align-items: end;
+
+
+
+
+    //Elimina el margen incial con el que viene la app
+
+    h2 {
+
+        margin: 0;
+    }
+
+
+
+    form {
+
+        grid-area: Anyadir;
+        padding: 2vmax 0 0 1vmax;
+        place-self: end;
+
+    }
+
+    #botones-control {
+
+        display: flex;
+
+        justify-content: flex-start;
+
+        padding-left: 1vmax;
+
+        align-self: start;
+        justify-self: start;
+
+        gap: 4vw;
+        width: 100%;
+
+        grid-area: Botones;
+
+    }
+
+    .Boton-Continuar {
+
+        justify-self: start;
+    }
+
+    #participantes {
+
+        grid-area: Participantes;
+
+        justify-self: start;
+        margin-top: 2vmax;
+
+        align-self: center;
+
+    }
+
+
+    #persona {
+
+        margin-top: 3vh;
+
+        width: 17vmax;
+
+        margin-right: 4vmin
+    }
+
+    ul {
+
+        @include columns(2);
+
+        column-fill: auto;
+
+        height: 80vh;
+
+
+        line-height: 5vmin;
+    }
+
+    li {
+
+        cursor: pointer;
+
+        margin: 0 3vmax;
+    }
+
+    li:hover {
+
+        color: red;
+
+        font-size: $font_size + 0.5vmin;
+
+        text-decoration: line-through;
+        text-decoration-thickness: 0.5vmin;
+    }
+
+    @media (max-width:801px) {
+
+        height: min-content;
+
+
+
+
+
+        #participantes {
+
+
+            height: auto;
+
+            ul {
+
+                @include columns(1);
+
+                line-height: 4vmin;
+            }
+
+        }
+
+        #botones-control {}
+
+    }
+
+}

@@ -1,0 +1,5 @@
+@mixin columns($n) {
+       columns: $n;
+       -webkit-columns: $n;
+       -moz-columns: $n;
+}

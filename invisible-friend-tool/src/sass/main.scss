@@ -1,0 +1,27 @@
+//VAriables
+
+
+$font_size: 2.5vmin; //Tamaño de letra normal
+
+
+$padding_button: 0.8vmin;
+
+body {
+
+    margin: 0;
+
+
+
+    font-size: $font_size;
+
+}
+
+//botones
+
+button,
+input {
+    font-size: $font_size;
+
+    padding: $padding_button;
+
+}

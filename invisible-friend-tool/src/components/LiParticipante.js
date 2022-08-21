@@ -6,6 +6,7 @@ function LiParticipante(props) {
 
     const id = 'LiParticipante' + participante; //Id del participante
 
+    const title = 'Eliminar a ' + participante;    //Crea la etiqueta
     var eliminarParticipante = () => {
 
         props.eliminar(participante);
@@ -14,7 +15,7 @@ function LiParticipante(props) {
     eliminarParticipante = eliminarParticipante.bind(this);
 
 
-    return (<li key={participante} id={id} onClick={eliminarParticipante}>{participante}</li>);
+    return (<li key={participante} title={title} id={id} onClick={eliminarParticipante}>{participante}</li>);
 }
 
 

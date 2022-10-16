@@ -182,7 +182,7 @@ class TablaIncompatibilidades extends Component {
         }
 
         return (
-            <div>
+            <div id=''>
                 <table id='tablaIncompatibilidades' >
                     <tbody>
                         <tr>

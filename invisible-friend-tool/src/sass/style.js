@@ -3,3 +3,4 @@
 import './index.scss';
 import './main.scss';
 import './addParticipant.scss';
+import './tabla.scss';

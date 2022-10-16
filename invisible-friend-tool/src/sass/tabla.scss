@@ -1,0 +1,52 @@
+#tablaIncompatibilidades {
+
+    border-collapse: collapse;
+
+    tbody {
+        table-layout: fixed;
+    }
+
+    td,
+    th {
+        border-collapse: collapse;
+        table-layout: fixed;
+
+        width: 6vw;
+
+        height: 5vh;
+
+
+        word-break: break-word;
+
+        text-align: center;
+
+
+        // -webkit-transform: rotate(-90deg);
+        // -moz-transform: rotate(-90deg);
+        // -o-transform: rotate(-90deg);
+        // transform: rotate(-90deg);
+    }
+
+
+
+    td {
+
+
+        border: solid grey 0.1vmin;
+
+
+        input {
+
+            $tamanyo_caja: 3vmin;
+
+            height: $tamanyo_caja;
+            width: $tamanyo_caja;
+
+            padding: 2vmin;
+
+
+        }
+    }
+
+
+}
